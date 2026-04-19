@@ -170,10 +170,10 @@ def main() -> None:
 
     variants = [
         # (kind, model, schema, filename_suffix, deck_name_suffix, guid_prefix, key)
-        ("vocab",   vocab_hanji_model,   VOCAB_FIELDS,   "vocab_hanji_front",    "Vocab (Hanji front)",    "v-h", "number"),
-        ("vocab",   vocab_poj_model,     VOCAB_FIELDS,   "vocab_poj_front",      "Vocab (POJ front)",      "v-p", "number"),
-        ("example", example_hanji_model, EXAMPLE_FIELDS, "examples_hanji_front", "Examples (Hanji front)", "e-h", "vocab_number"),
-        ("example", example_poj_model,   EXAMPLE_FIELDS, "examples_poj_front",   "Examples (POJ front)",   "e-p", "vocab_number"),
+        ("vocab",   vocab_hanji_model,   VOCAB_FIELDS,   "vocab_hanji_front",    "Vocab (Hàn-jī)",       "v-h", "number"),
+        ("vocab",   vocab_poj_model,     VOCAB_FIELDS,   "vocab_poj_front",      "Vocab (Pe̍h-ōe-jī)",    "v-p", "number"),
+        ("example", example_hanji_model, EXAMPLE_FIELDS, "examples_hanji_front", "Examples (Hàn-jī)",    "e-h", "vocab_number"),
+        ("example", example_poj_model,   EXAMPLE_FIELDS, "examples_poj_front",   "Examples (Pe̍h-ōe-jī)", "e-p", "vocab_number"),
     ]
 
     total_notes = 0
@@ -184,12 +184,12 @@ def main() -> None:
         ex_rows = load_csv(CSV_DIR / f"maryknoll_book1_lesson{lesson}_examples.csv")
         rows_by_kind = {"vocab": vocab_rows, "example": ex_rows}
 
-        base = f"Maryknoll Book 1::Lesson {lesson}"
+        base = f"Maryknoll Book 1 - Lesson {lesson}"
 
         for idx, (kind, model, schema, file_suffix, deck_suffix, prefix, key) in enumerate(variants):
             deck = build_deck(
                 DECK_ID_BASE + lesson * 10 + idx,
-                f"{base}::{deck_suffix}",
+                f"{base} - {deck_suffix}",
                 model, rows_by_kind[kind], schema,
                 f"mk-l{lesson}-{prefix}", key,
             )
