@@ -16,16 +16,24 @@ Output:
 from __future__ import annotations
 
 import csv
+import shutil
+import zipfile
 from pathlib import Path
 
 import genanki
+
+# Fixed build timestamp — makes .apkg output reproducible so identical CSVs
+# produce byte-identical files. Without this, every rebuild rewrites note/card
+# mod times and zip entry mtimes, polluting git diffs.
+BUILD_TIMESTAMP = 1577836800.0  # 2020-01-01 UTC
+ZIP_MTIME = (2020, 1, 1, 0, 0, 0)
 
 ROOT = Path(__file__).parent
 BOOK_DIR = ROOT / "maryknoll-book-1"
 CSV_DIR = BOOK_DIR / "csv"
 OUT_DIR = BOOK_DIR / "decks"
 
-LESSONS = [1, 2, 3]
+LESSONS = [1, 2, 3, 4]
 
 MODEL_ID_VOCAB_HANJI = 1607390001
 MODEL_ID_VOCAB_POJ = 1607390002
@@ -165,6 +173,16 @@ def build_deck(deck_id: int, name: str, model, rows, schema, guid_prefix: str, k
     return deck
 
 
+def normalize_zip_mtime(path: Path) -> None:
+    """Rewrite all zip entries with a fixed mtime so the .apkg is reproducible."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with zipfile.ZipFile(path, "r") as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for info in zin.infolist():
+            info.date_time = ZIP_MTIME
+            zout.writestr(info, zin.read(info.filename))
+    shutil.move(tmp, path)
+
+
 def main() -> None:
     OUT_DIR.mkdir(exist_ok=True)
 
@@ -194,7 +212,8 @@ def main() -> None:
                 f"mk-l{lesson}-{prefix}", key,
             )
             out_path = OUT_DIR / f"maryknoll_book1_lesson{lesson}_{file_suffix}.apkg"
-            genanki.Package([deck]).write_to_file(out_path)
+            genanki.Package([deck]).write_to_file(out_path, timestamp=BUILD_TIMESTAMP)
+            normalize_zip_mtime(out_path)
             print(f"  {out_path.name} ({len(deck.notes)} notes)")
             total_notes += len(deck.notes)
             total_files += 1
