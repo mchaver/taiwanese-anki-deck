@@ -78,6 +78,7 @@ Examples: `Gâu7-chá`, `lōa3-chē`, `Che ài2 lōa3-chē`.
 9. **`Sian-siⁿ`** (先生) is irregular: it sandhis to `Sian3-siⁿ3` (both syllables become tone 3), and a **surname immediately preceding it does not change tone**. Example: `Tân Sian3-siⁿ3`, `Khó· Sian3-siⁿ3`.
 10. **`ē-hiáu` questions pair with `bē`** (not `bô·`). The form is `... ē-hiáu ... bē?` (會...袂?), not `... ē-hiáu ... bô·?`. `bē` here is not a sentence-final enclitic — it stays at its base tone.
 11. **`iōng + Verb + ê` construction** ("by means of"): the verb does **not** sandhi. The trailing `ê` follows the 1-3-7 rule: at sentence end `ê` → tone 3 (`ê3`); mid-sentence `ê` → tone 7 (`ê7`). Example: `iōng3-kiâⁿ-ê7 lâi`, `iōng3-siá-ê3`.
+12. **Verb + pronoun at sentence end**: when a sentence ends with a verb (or verb compound) immediately followed by a pronoun, the **last syllable of the verb does not change tone**, and the **pronoun shifts per the 1-3-7 rule** (in practice landing on tone 3 — e.g., `i` tone 1 → `i3`, `góa` tone 2 → `góa3`). Example: `Góa m̄-bat i.` → `Góa1 m̄3-bat i3.`
 
 When in doubt, defer to explicit tone numbers above syllables on the book page.
 
